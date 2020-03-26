@@ -13,11 +13,17 @@ export class TodoItem extends Component {
 
     //this.props.markComplete -> kay adto/gipasa sa todos.js na location 
     render() {
+        //other ways to get the (specific) data
+        const { id, title } = this.props.todo;
         return (
             <div style={this.getStyle()}>
-            
-                <input type="checkbox" onChange={this.props.markComplete} /> {' '}
-                <p>{ this.props.todo.title }</p>
+                <p>
+                <input type="checkbox" onChange={this.props.markComplete.bind(this, id) 
+                //bind->gi package and data arun ma use sa nigammit sa todoitem nga component
+                } /> {' '}
+                { title }
+                <button style={btnStyle} onClick={this.props.delTodo.bind(this, id)}>x</button>
+                </p>
             </div>
         )
     }
@@ -29,8 +35,14 @@ TodoItem.propTypes = {
     todo: PropTypes.object.isRequired
 }
 
-// const itemStyle = {
-//     backgroundColor: '#f4f4f4'
-// }
+const btnStyle = {
+    background: '#ff0000',
+    color: '#fff',
+    padding: '5px 9px',
+    border: 'none',
+    borderRadius: '50%',
+    cursor: 'pointer',
+    float: 'right'
+}
 
 export default TodoItem

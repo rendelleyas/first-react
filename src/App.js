@@ -1,36 +1,77 @@
 import React from 'react';
 import Todos from './components/Todos'
+import AddTodo from './components/AddTodo'
+import Header from './components/layout/Header'
+import { v4 as uuidv4 } from 'uuid'
+
+import './App.css';
 
 class App extends React.Component {
 
   state = {
     todos: [
       {
-        id: 1,
+        id: uuidv4(),
         title: 'Take you out.',
         completed: false
       },
       {
-        id: 2,
+        id: uuidv4(),
         title: 'Take you out shit.',
         completed: false
       },
       {
-        id: 3,
+        id: uuidv4(),
         title: 'Take you out shitiest.',
         completed: true
       }
     ]
   }
-
-  markComplete = () => {
-    console.log('App js')
+  
+  markComplete = (id) => {
+    //state ang gamit kay naa man sa app.js  -> naa sa babaw
+    // gi map sya una, if ang id nga na click is naa, lahiun niya ang value to opposite
+    this.setState({
+      todos: this.state.todos.map( todo => {
+        if(todo.id === id){
+          todo.completed = !todo.completed;
+        }
+        return todo;
+      })
+    })
   }
 
+  // dete specific data
+  // ... ->psabot tanan data
+  // feilter - > walaun ang kani nga id 
+  delTodo = (id) => {
+    this.setState({
+      //... use to copy ang current value sa array
+      todos: [...this.state.todos.filter(todo=>todo.id !== id )]
+    });
+  }
+
+  addTodo = (title) => {
+    const newTodo = {
+      id: uuidv4(),
+      // title: title, - > pwede pd
+      title, 
+      completed: false
+    }
+    this.setState({ todos: [...this.state.todos, newTodo] });
+  }
   render() {
+      //this.state.todos -> way to declare nga maka access sila sa data 
     return (
       <div className="App">
-        <Todos todos={this.state.todos} markComplete={this.markComplete}/>
+       <div className='container'>
+          <Header />
+          <AddTodo addTodo={this.addTodo}/>
+          <Todos todos={this.state.todos}
+            markComplete={this.markComplete}
+            delTodo={this.delTodo}
+          />
+       </div>
       </div>
     );
   }

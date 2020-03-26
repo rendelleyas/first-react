@@ -7,9 +7,12 @@ class Todos extends React.Component {
     render() {
         //murag new way sa pag for-each
         //props is ang data gisend
-        //this.props.markComplete->kay adto/gipasa sa app.js na location, kung knsa nag gamit sa component 
+        //this.props.markComplete->kay adto/gipasa sa app.js na location ang data, kung knsa nag gamit sa component 
         return this.props.todos.map( (todo) => (
-            <TodoItem key={todo.id} todo={todo} markComplete={this.props.markComplete}/>
+            <TodoItem key={todo.id} todo={todo} 
+                markComplete={this.props.markComplete}
+                delTodo = {this.props.delTodo}
+                />
         ));
     }
 }
